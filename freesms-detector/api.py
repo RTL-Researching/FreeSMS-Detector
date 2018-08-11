@@ -8,12 +8,12 @@ app.config["DEBUG"] = True
 
 phonenumbers = [
     {'id': 0,
-     'phonenumber': '+14167891234',
+     'phonenumber': '14167891234',
      'timestamp': '2018-08-11',
      'md5': 'c8ca4a0780d2028db2cd3439f805a040',
      'origin_url': ''},
     {'id': 1,
-     'phonenumber': '+441823711087',
+     'phonenumber': '441823711087',
      'timestamp': '2018-08-11',
      'md5': 'c8ca4a0780d2028db2cd3439f805a044',
      'origin_url': ''},
@@ -38,7 +38,6 @@ def api_pn():
     if 'phonenumber' in request.args:
         #phonenumber = int(request.args['phonenumber'])
         phonenumber = request.args['phonenumber']
-        print("phone number present")
     else:
         return "Error: No phone number field provided. Please specify an id."
 
@@ -47,17 +46,14 @@ def api_pn():
 
     # Loop through the data and match results that fit the requested ID.
     # IDs are unique, but other fields might return many results
-    for i in phonenumbers:
-        if i['phonenumber'] in phonenumber:
+    for number in phonenumbers:
+        if number['phonenumber'] in phonenumber:
             results.append(phonenumber)
             print("phone number found")
         else:
-            print("phone number not found")
+            print("phone number not found in data set (list)")
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.
-    return jsonify(results)
-
-
-
-
+    #return jsonify(results
+    return "This number is most likely a free SMS number"
 app.run()
