@@ -6,7 +6,7 @@ from runner import insert_phonenumber
 
 url = "https://receive-a-sms.com/"
 
-def scraper:
+def scraper():
     response = requests.get(url)
     content = response.content
     soup = BeautifulSoup(response.text, 'html.parser')
