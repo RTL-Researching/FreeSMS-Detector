@@ -33,25 +33,25 @@ def api_all():
 
 
 @app.route('/api/v1/resources/phonenumbers', methods=['GET'])
-def api_phonenumber():
-    # Check if phone number was provided as part of the URL.
-    # If yes, assign it to a variable.
-    # If no, display an error in the browser.
-    if 'phonenumber' in request.args:
-        phonenumber = int(request.args['phonenumber'])
+def api_id():
+    # Check if an ID was provided as part of the URL.
+    # If ID is provided, assign it to a variable.
+    # If no ID is provided, display an error in the browser.
+    if 'id' in request.args:
+        id = int(request.args['id'])
     else:
-        return "Error: No phone number provided. Please specify one."
+        return "Error: No id field provided. Please specify an id."
 
     # Create an empty list for our results
     results = []
 
-    #
+    # Loop through the data and match results that fit the requested ID.
+    # IDs are unique, but other fields might return many results
     for phonenumber in phonenumbers:
-        if phonenumber['phonenumber'] == phonenumber:
+        if phonenumber['id'] == id:
             results.append(phonenumber)
 
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.
     return jsonify(results)
-
 app.run()
