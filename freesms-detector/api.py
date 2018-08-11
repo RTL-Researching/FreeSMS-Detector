@@ -46,11 +46,10 @@ def api_pn():
     # Loop through the data and match results that fit the requested phone number.
     for i in phonenumbers:
         if number_query in i['phonenumber']:
-            answer = "yes"
-        else:
-            answer = "no"
+            return "yes"
 
-    return answer
+
+    return "no"
 
     #sample URL for Query
     #http: // 127.0.0.1: 5000 / api / v1 / resources / phonenumbers?phonenumber = 14167891234  <- returns no, even though it is in the list
