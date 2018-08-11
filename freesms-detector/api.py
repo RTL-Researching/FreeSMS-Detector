@@ -31,4 +31,27 @@ def home():
 def api_all():
     return jsonify(phonenumbers)
 
+
+@app.route('/api/v1/resources/phonenumbers', methods=['GET'])
+def api_phonenumber():
+    # Check if phone number was provided as part of the URL.
+    # If yes, assign it to a variable.
+    # If no, display an error in the browser.
+    if 'phonenumber' in request.args:
+        phonenumber = int(request.args['phonenumber'])
+    else:
+        return "Error: No phone number provided. Please specify one."
+
+    # Create an empty list for our results
+    results = []
+
+    #
+    for phonenumber in phonenumbers:
+        if phonenumber['phonenumber'] == phonenumber:
+            results.append(phonenumber)
+
+    # Use the jsonify function from Flask to convert our list of
+    # Python dictionaries to the JSON format.
+    return jsonify(results)
+
 app.run()
