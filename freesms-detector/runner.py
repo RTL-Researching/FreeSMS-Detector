@@ -25,7 +25,7 @@ def create_connection(db_file="phonebook.sqlite"):
 
     package_dir = os.path.abspath(os.path.dirname(__file__))
     db_full_path = os.path.join(package_dir, "..", "data", db_file)
-    print(db_full_path)
+
     try:
         conn = sqlite3.connect(db_full_path)
         return conn
