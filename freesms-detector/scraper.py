@@ -17,7 +17,7 @@ def scrape_site1():
         insert_phonenumber(link.text, url)
 
 
-def scraper_site2():
+def scrape_site2():
     url = "https://sms-online.co/receive-free-sms"
     response = requests.get(url)
     content = response.content
@@ -26,3 +26,13 @@ def scraper_site2():
     for number in numbers:
         print(number.text)
         insert_phonenumber(number.text, url)
+
+
+def main():
+    print("Scraping some sites")
+    print("scraping site 1")
+    scrape_site1()
+    print("scraping site 2")
+    scrape_site2()
+
+main()
