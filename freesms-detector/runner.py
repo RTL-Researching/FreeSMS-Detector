@@ -3,6 +3,7 @@ import sqlite3
 import hashlib
 import os
 import re
+import json
 
 def get_clean_phonenumber(phonenumber):
     # Tries to clean up a phonenumber according to the E.164 format.
@@ -105,4 +106,22 @@ def check_phonenumber_hash(md5):
 
     return result
 
+
+def get_complete_phonebook():
+    sql = '''   SELECT  "max(id)" as id,
+                        phonenumber,
+                        timestamp,
+                        md5, 
+                        originurl as url
+                FROM recent_phonenumbers
+                ORDER BY id ASC; '''
+
+    con = create_connection()
+
+    cur = con.cursor()
+    results = cur.execute(sql)
+
+    items = [dict(zip([key[0] for key in cur.description], row)) for row in results]
+
+    return items
 
