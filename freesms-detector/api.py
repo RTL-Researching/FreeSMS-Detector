@@ -42,18 +42,21 @@ def api_pn():
         return "Error: No phone number field provided. Please specify an id."
 
     # Create an empty list for our results
-    results = []
+    #results = []
 
     # Loop through the data and match results that fit the requested ID.
     # IDs are unique, but other fields might return many results
     for number in phonenumbers:
         if number['phonenumber'] in phonenumber:
-            results.append(phonenumber)
+            #results.append(phonenumber)
             print("phone number found")
+            return "This number is most likely a free SMS number"
+
         else:
             print("phone number not found in data set (list)")
+            return "This number was not found in our data set"
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.
-    #return jsonify(results
-    return "This number is most likely a free SMS number"
+    #return jsonify(results)
+
 app.run()
