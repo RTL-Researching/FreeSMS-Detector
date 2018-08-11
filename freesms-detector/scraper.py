@@ -23,7 +23,6 @@ def scraper_site2():
     content = response.content
     soup = BeautifulSoup(response.text, 'html.parser')
     numbers = soup.select('h4.number-boxes-item-number')
-
     for number in numbers:
         print(number.text)
         insert_phonenumber(number.text, url)
