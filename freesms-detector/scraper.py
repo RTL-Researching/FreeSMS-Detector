@@ -21,10 +21,16 @@ def scrape_site2():
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     numbers = soup.select('h4.number-boxes-item-number')
-
     for number in numbers:
         print(number.text)
         insert_phonenumber(number.text, url)
 
 
-scrape_site1()
+def main():
+    print("Scraping some sites")
+    print("scraping site 1")
+    scrape_site1()
+    print("scraping site 2")
+    scrape_site2()
+
+main()
