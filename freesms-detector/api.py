@@ -1,5 +1,6 @@
 import flask
 from flask import request, jsonify
+from runner import check_phonenumber
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -40,16 +41,11 @@ def api_pn():
     else:
         return "Error: No phone number field provided. Please specify a phone number."
 
-    # Create an empty list for our results
-    #results = []
+    print(number_query)
 
-    # Loop through the data and match results that fit the requested phone number.
-    for i in phonenumbers:
-        if number_query in i['phonenumber']:
-            return "yes"
+    result = check_phonenumber(number_query)
 
-
-    return "no"
+    return str(result)
 
     #sample URL for Query
     #http: // 127.0.0.1: 5000 / api / v1 / resources / phonenumbers?phonenumber = 14167891234  <- returns no, even though it is in the list
