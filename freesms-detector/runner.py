@@ -124,3 +124,4 @@ def get_complete_phonebook():
     items = [dict(zip([key[0] for key in cur.description], row)) for row in results]
 
     return items
+
