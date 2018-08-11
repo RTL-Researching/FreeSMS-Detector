@@ -36,27 +36,25 @@ def api_pn():
     # If yes, assign it to a variable.
     # If no display error.
     if 'phonenumber' in request.args:
-        #phonenumber = int(request.args['phonenumber'])
-        phonenumber = request.args['phonenumber']
+        number_query = request.args['phonenumber']
     else:
-        return "Error: No phone number field provided. Please specify an id."
+        return "Error: No phone number field provided. Please specify a phone number."
 
     # Create an empty list for our results
     #results = []
 
-    # Loop through the data and match results that fit the requested ID.
-    # IDs are unique, but other fields might return many results
-    for number in phonenumbers:
-        if number['phonenumber'] in phonenumber:
-            #results.append(phonenumber)
-            print("phone number found")
-            return "This number is most likely a free SMS number"
-
+    # Loop through the data and match results that fit the requested phone number.
+    for i in phonenumbers:
+        if number_query in i['phonenumber']:
+            answer = "yes"
         else:
-            print("phone number not found in data set (list)")
-            return "This number was not found in our data set"
-    # Use the jsonify function from Flask to convert our list of
-    # Python dictionaries to the JSON format.
-    #return jsonify(results)
+            answer = "no"
+
+    return answer
+
+    #sample URL for Query
+    #http: // 127.0.0.1: 5000 / api / v1 / resources / phonenumbers?phonenumber = 14167891234  <- returns no, even though it is in the list
+    #http: // 127.0.0.1: 5000 / api / v1 / resources / phonenumbers?phonenumber = 441823711087  <- returns yes (as it should)
+
 
 app.run()
