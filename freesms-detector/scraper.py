@@ -4,9 +4,9 @@ from runner import insert_phonenumber
 
 #urls = ["https://receive-a-sms.com/", "https://sms-online.co/receive-free-sms", "https://www.receive-sms-online.info/"]
 
-url = "https://receive-a-sms.com/"
 
-def scraper():
+def scrape_site1():
+    url = "https://receive-a-sms.com/"
     response = requests.get(url)
     content = response.content
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -17,8 +17,13 @@ def scraper():
         insert_phonenumber(link.text, url)
 
 
-scraper()
+def scraper_site2():
+    url = "https://sms-online.co/receive-free-sms"
+    response = requests.get(url)
+    content = response.content
+    soup = BeautifulSoup(response.text, 'html.parser')
+    numbers = soup.select('h4.number-boxes-item-number')
 
-
-
-
+    for number in numbers:
+        print(number.text)
+        insert_phonenumber(number.text, url)
