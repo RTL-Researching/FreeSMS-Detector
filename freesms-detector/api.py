@@ -1,55 +1,39 @@
 import flask
-from flask import request, jsonify
-from runner import check_phonenumber
+from flask import jsonify
+from runner import *
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-#test data.  replace with database
-
-phonenumbers = [
-    {'id': 0,
-     'phonenumber': '14167891234',
-     'timestamp': '2018-08-11',
-     'md5': 'c8ca4a0780d2028db2cd3439f805a040',
-     'origin_url': ''},
-    {'id': 1,
-     'phonenumber': '441823711087',
-     'timestamp': '2018-08-11',
-     'md5': 'c8ca4a0780d2028db2cd3439f805a044',
-     'origin_url': ''},
-]
 
 @app.route('/', methods=['GET'])
+# Example query:
+# http://127.0.0.1:5000/
 def home():
     return '''<h1>FreeSMS-Detector</h1>'''
 
 
-# A route to return all of the available entries in our catalog.
-@app.route('/api/v1/resources/phonenumbers/all', methods=['GET'])
+@app.route('/api/v1/resources/phonebook/all', methods=['GET'])
+# Example query:
+# http://127.0.0.1:5000/api/v1/resources/phonebook/all
 def api_all():
-    return jsonify(phonenumbers)
+    return jsonify(get_complete_phonebook())
 
 
-@app.route('/api/v1/resources/phonenumbers', methods=['GET'])
-def api_pn():
-    # Check if an phonenumber  was provided as part of the URL.
-    # If yes, assign it to a variable.
-    # If no display error.
-    if 'phonenumber' in request.args:
-        number_query = request.args['phonenumber']
-    else:
-        return "Error: No phone number field provided. Please specify a phone number."
+@app.route('/api/v1/resources/phonebook/number/<pn>', methods=['GET'])
+# Example query:
+# http://127.0.0.1:5000/api/v1/resources/phonebook/number/%2B14165555555
+#
+# Make sure that the phonenumber is "urlencoded": a '+' becomes a '%2B', etc...
+def api_pn(pn):
+    return str(check_phonenumber(pn))
 
-    print(number_query)
 
-    result = check_phonenumber(number_query)
-
-    return str(result)
-
-    #sample URL for Query
-    #http: // 127.0.0.1: 5000 / api / v1 / resources / phonenumbers?phonenumber = 14167891234  <- returns no, even though it is in the list
-    #http: // 127.0.0.1: 5000 / api / v1 / resources / phonenumbers?phonenumber = 441823711087  <- returns yes (as it should)
+@app.route('/api/v1/resources/phonebook/hash/<pnh>', methods=['GET'])
+# Example query:
+# http://127.0.0.1:5000/api/v1/resources/phonebook/hash/85e0c15377c5e0b4aac56743596968a4
+def api_pnh(pnh):
+    return str(check_phonenumber_hash(pnh))
 
 
 app.run()
