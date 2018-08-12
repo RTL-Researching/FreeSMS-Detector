@@ -65,6 +65,10 @@ Ex:
 * '**+14165555555**' becomes '**%2B14165555555**'
 * '**+1 (416) 555-5555**' becomes '**%2B1%20%28416%29%20555-5555**'
 
+Note 2: When submitting a hash to query, please format the phone number first in the [E.164 format](https://en.wikipedia.org/wiki/E.164).
+Ex:
+* '**+1 (416) 555-5555**' becomes '**+14165555555**', and the md5 hash becomes '**b50f87df30506231973bb6f72093b117**'
+
 ### Components
 This script consists of a few components:
 
